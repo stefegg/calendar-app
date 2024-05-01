@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { MonthDropdown, Calendar } from './components';
+import { MONTH_ARRAY } from "./constants";
+
+const Container = styled.div`
+  margin: 32px;
+`;
+
+const CURRENT_DATE = new Date();
+const CURRENT_MONTH_IDX = CURRENT_DATE.getMonth();
+const CURRENT_MONTH = MONTH_ARRAY[CURRENT_MONTH_IDX]
 
 function App() {
+  const [selectedMonth, setSelectedMonth] = useState<string>(CURRENT_MONTH)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <MonthDropdown
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+      />
+      <Calendar selectedMonth={selectedMonth} />
+    </Container>
   );
 }
 
