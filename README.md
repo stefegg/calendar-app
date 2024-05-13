@@ -24,15 +24,18 @@ Ideally this interview should take you around 2 hours to complete. Honestly this
 
 ### 3. I want to be able to display the holidays of two different countries on the calendar
 * Use the `https://date.nager.at/` api to fetch the holidays of two different countries. (You can choose whichever two countries you'd like)
-* Display the name of the holidays for each country in the correct date cell. Use different colors so that we can differentiate which holiday came from which country. In our example we used blue for Venezuela and red for France.
-* Have this work for every month in 2024.
+* Display the name of the holidays for each country in the correct date cell. Use different colors so that we can differentiate which holiday came from which country. In our example we used blue for Venezuela and red for France. (Note you can display either the name or the localName property of each holiday)
 * Certain countries have multiple holidays on the same day. Make sure to display all the holidays from both countries in each date cell. Add a vertical scroll inside the date cell if there is not enough room to accommodate every holiday.
+* Have this work for every month in 2024.
 
 # Notes about the codebase
 * You can add any package you want to complete this project.
 * You can add styling any way you'd like
 * We have a set of helpful constants in `src/constants.ts` that you are free to use. Also feel free to add any additional constants that you need.
 * This project was built on top of create react app
+
+# Notes about submitting your interview
+* We would like you to email your completed code back to us in a zip file. Please delete the node_modules folder before creating the zip file.
 
 
 # Getting Started with Create React App

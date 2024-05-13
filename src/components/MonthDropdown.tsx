@@ -6,7 +6,6 @@ const Select = styled.select`
   height: 40px;
   width: 160px;
   font-size: 20px;
-  margin-bottom: 16px;
 `;
 
 interface Props {
