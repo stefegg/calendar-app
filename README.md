@@ -25,7 +25,8 @@ Ideally this interview should take you around 2 hours to complete. Honestly this
 ### 3. I want to be able to display the holidays of two different countries on the calendar
 * Use the `https://date.nager.at/` api to fetch the holidays of two different countries. (You can choose whichever two countries you'd like)
 * Display the name of the holidays for each country in the correct date cell. Use different colors so that we can differentiate which holiday came from which country. In our example we used blue for Venezuela and red for France.
-* Have this work for every month in 2024. 
+* Have this work for every month in 2024.
+* Certain countries have multiple holidays on the same day. Make sure to display all the holidays from both countries in each date cell. Add a vertical scroll inside the date cell if there is not enough room to accommodate every holiday.
 
 # Notes about the codebase
 * You can add any package you want to complete this project.

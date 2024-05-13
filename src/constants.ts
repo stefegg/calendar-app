@@ -24,7 +24,7 @@ export const DAYS_OF_WEEK = [
 
 export const MONTH_ARRAY: string[] = [
   "January",
-  "Feburary",
+  "February",
   "March",
   "April",
   "May",
@@ -39,7 +39,7 @@ export const MONTH_ARRAY: string[] = [
 
 export const DAYS_IN_MONTH: { [key: string]: number } = {
   January: 31,
-  Feburary: 29,
+  February: 29,
   March: 31,
   April: 30,
   May: 31,
