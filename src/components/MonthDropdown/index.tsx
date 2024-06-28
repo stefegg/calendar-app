@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { MONTH_ARRAY } from "../constants";
+import { MONTH_ARRAY } from "../../constants";
 
 const Select = styled.select`
   height: 40px;
@@ -18,8 +18,10 @@ const MonthDropdown = ({ selectedMonth, setSelectedMonth }: Props) => {
 
   return (
     <Select value={selectedMonth} onChange={handleChange}>
-      {MONTH_ARRAY.map((month) => (
-        <option value={month}>{month}</option>
+      {MONTH_ARRAY.map((month, idx) => (
+        <option value={month} key={`${month}-${idx}`}>
+          {month}
+        </option>
       ))}
     </Select>
   );
