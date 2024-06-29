@@ -12,6 +12,16 @@ export interface Holiday {
   types: string[];
 }
 
+export interface DateAttr {
+  dateString: string;
+  dayNumber: number;
+  isCurrentMonth: boolean;
+  isNextMonth?: boolean;
+  isPreviousMonth?: boolean;
+  isHoliday?: boolean;
+  holiday?: Holiday[];
+}
+
 export const DAYS_OF_WEEK = [
   "Sunday",
   "Monday",
@@ -36,18 +46,3 @@ export const MONTH_ARRAY: string[] = [
   "November",
   "December",
 ];
-
-// export const DAYS_IN_MONTH: { [key: string]: number } = {
-//   January: 31,
-//   February: 29,
-//   March: 31,
-//   April: 30,
-//   May: 31,
-//   June: 30,
-//   July: 31,
-//   August: 31,
-//   September: 30,
-//   October: 31,
-//   November: 30,
-//   December: 31,
-// };

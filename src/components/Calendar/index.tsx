@@ -1,35 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DAYS_OF_WEEK } from "../../constants";
 import {
-  createDaysForCurrentMonth,
-  createDaysForPreviousMonth,
-  createDaysForNextMonth,
+  currentMonthDisplay,
+  prevMonthDisplay,
+  nextMonthDisplay,
+  updateHolidays,
 } from "../../utils";
 import { CalendarBody, CalendarHeader, HeaderCell, DayDisplay } from "./styles";
+import { Holiday, DateAttr } from "../../constants";
 
 interface Props {
   selectedMonth: string;
+  holidays: Holiday[] | null;
+  errorMsg?: string;
 }
 
-const Calendar = ({ selectedMonth }: Props): JSX.Element => {
-  let currentMonthDays = createDaysForCurrentMonth(2024, selectedMonth);
-  let previousMonthDays = createDaysForPreviousMonth(
-    2024,
-    selectedMonth,
-    currentMonthDays
+const Calendar = ({
+  selectedMonth,
+  holidays,
+  errorMsg,
+}: Props): JSX.Element => {
+  const [calendarDisplay, setCalendarDisplay] = useState<DateAttr[] | null>(
+    null
   );
-  let nextMonthDays = createDaysForNextMonth(
-    2024,
-    selectedMonth,
-    currentMonthDays
-  );
-  let calendarGridDayObjects = [
-    ...previousMonthDays,
-    ...currentMonthDays,
-    ...nextMonthDays,
-  ];
 
-  console.log(calendarGridDayObjects, "--------obj");
+  useEffect(() => {
+    let currentMonthDays = currentMonthDisplay(2024, selectedMonth);
+    if (holidays !== null) {
+      currentMonthDays = updateHolidays(currentMonthDays, holidays);
+    }
+    const previousMonthDays = prevMonthDisplay(
+      2024,
+      selectedMonth,
+      currentMonthDays
+    );
+    const nextMonthDays = nextMonthDisplay(
+      2024,
+      selectedMonth,
+      currentMonthDays
+    );
+    setCalendarDisplay([
+      ...previousMonthDays,
+      ...currentMonthDays,
+      ...nextMonthDays,
+    ]);
+  }, [holidays, selectedMonth]);
+
+  console.log(calendarDisplay, "--------obj");
   return (
     <>
       <CalendarHeader>
@@ -38,14 +55,16 @@ const Calendar = ({ selectedMonth }: Props): JSX.Element => {
         ))}
       </CalendarHeader>
       <CalendarBody>
-        {calendarGridDayObjects.map((day, idx) => (
-          <DayDisplay
-            key={`${day.dateString}-${idx}`}
-            $currentMonth={day.isCurrentMonth}
-          >
-            {day.dayOfMonth}
-          </DayDisplay>
-        ))}
+        {calendarDisplay &&
+          calendarDisplay.map((day, idx) => (
+            <DayDisplay
+              key={`${day.dateString}-${idx}`}
+              $currentMonth={day.isCurrentMonth}
+            >
+              {day.dayNumber}
+              {/* {day.isHoliday ? <HolidayDisplay /> : null} */}
+            </DayDisplay>
+          ))}
       </CalendarBody>
     </>
   );

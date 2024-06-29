@@ -36,4 +36,5 @@ export const DayDisplay = styled.div<DisplayDayProps>`
   padding-bottom: 4rem;
   font-size: 24px;
   padding-left: 8px;
+  padding-right: 8px;
 `;
