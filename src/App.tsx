@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { MonthDropdown, Calendar } from "./components";
+import { CalendarHeader, Calendar } from "./components";
 import { MONTH_ARRAY, Holiday } from "./constants";
 import { getHolidays } from "./api";
 
 const Container = styled.div`
   margin: 32px;
-`;
-
-const Flex = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
 `;
 
 const CURRENT_DATE = new Date();
@@ -30,19 +23,16 @@ function App() {
       const holidaySetTwo = await getHolidays(codeTwo);
       if (Array.isArray(holidaySetOne) && Array.isArray(holidaySetTwo)) {
         setHolidays(holidaySetOne.concat(holidaySetTwo));
-      } else setErrorMsg("Error fetching holidays");
+      } else setErrorMsg("Error fetching holidays, please try again");
     };
     holidayCall("US", "MX");
   }, []);
   return (
     <Container>
-      <Flex>
-        <MonthDropdown
-          selectedMonth={selectedMonth}
-          setSelectedMonth={setSelectedMonth}
-        />
-        <b>2024</b>
-      </Flex>
+      <CalendarHeader
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+      />
       <Calendar
         selectedMonth={selectedMonth}
         holidays={holidays}

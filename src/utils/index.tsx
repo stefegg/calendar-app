@@ -89,19 +89,17 @@ export function updateHolidays(
   dateAttrs: DateAttr[],
   holidays: Holiday[]
 ): DateAttr[] {
-  dateAttrs.forEach((dateAttr) => {
+  dateAttrs.map((dateAttr) => {
     if (dateAttr.isCurrentMonth) {
       const matchingHolidays = holidays.filter(
         (holiday) => holiday.date === dateAttr.dateString
       );
-      if (matchingHolidays) {
-        return {
-          ...dateAttr,
-          isHoliday: true,
-          holiday: [...matchingHolidays],
-        };
+      if (matchingHolidays.length) {
+        dateAttr.isHoliday = true;
+        dateAttr.holiday = matchingHolidays;
       }
     }
+    return dateAttr;
   });
   return dateAttrs;
 }

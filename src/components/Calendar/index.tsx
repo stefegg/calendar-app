@@ -6,8 +6,15 @@ import {
   nextMonthDisplay,
   updateHolidays,
 } from "../../utils";
-import { CalendarBody, CalendarHeader, HeaderCell, DayDisplay } from "./styles";
+import {
+  CalendarBody,
+  WeekDaysHeader,
+  HeaderCell,
+  DayDisplay,
+  ErrorDisplay,
+} from "./styles";
 import { Holiday, DateAttr } from "../../constants";
+import { HolidayDisplay } from "../index";
 
 interface Props {
   selectedMonth: string;
@@ -46,14 +53,14 @@ const Calendar = ({
     ]);
   }, [holidays, selectedMonth]);
 
-  console.log(calendarDisplay, "--------obj");
   return (
     <>
-      <CalendarHeader>
+      <WeekDaysHeader>
         {DAYS_OF_WEEK.map((day, idx) => (
           <HeaderCell key={`${day}-${idx}`}>{day}</HeaderCell>
         ))}
-      </CalendarHeader>
+      </WeekDaysHeader>
+      {errorMsg && <ErrorDisplay>{errorMsg}</ErrorDisplay>}
       <CalendarBody>
         {calendarDisplay &&
           calendarDisplay.map((day, idx) => (
@@ -62,7 +69,15 @@ const Calendar = ({
               $currentMonth={day.isCurrentMonth}
             >
               {day.dayNumber}
-              {/* {day.isHoliday ? <HolidayDisplay /> : null} */}
+              {day.holiday?.length
+                ? day.holiday.map((day, idx) => (
+                    <HolidayDisplay
+                      key={`${idx}-${day.name}`}
+                      holidayName={day.localName}
+                      countryCode={day.countryCode}
+                    />
+                  ))
+                : null}
             </DayDisplay>
           ))}
       </CalendarBody>
