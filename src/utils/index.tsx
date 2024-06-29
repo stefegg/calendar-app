@@ -95,7 +95,6 @@ export function updateHolidays(
         (holiday) => holiday.date === dateAttr.dateString
       );
       if (matchingHolidays.length) {
-        dateAttr.isHoliday = true;
         dateAttr.holiday = matchingHolidays;
       }
     }
