@@ -30,17 +30,16 @@ export const prevMonthDisplay = (
     dateString: string | number | dayjs.Dayjs | Date | null | undefined;
   }[]
 ): DateAttr[] => {
-  const firstDayOfTheMonthWeekday = getDayIndex(currentMonthDays[0].dateString);
+  const visibleNumberOfDaysFromPreviousMonth = getDayIndex(
+    currentMonthDays[0].dateString
+  );
   const previousMonth = dayjs(`${year}-${month}-01`).subtract(1, "month");
-
-  const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday;
 
   const previousMonthLastMondayDayOfMonth = dayjs(
     currentMonthDays[0].dateString
   )
     .subtract(visibleNumberOfDaysFromPreviousMonth, "day")
     .date();
-
   return [...Array(visibleNumberOfDaysFromPreviousMonth)].map((_, idx) => {
     return {
       dateString: dayjs(
@@ -50,7 +49,6 @@ export const prevMonthDisplay = (
       ).format("YYYY-MM-DD"),
       dayNumber: previousMonthLastMondayDayOfMonth + idx,
       isCurrentMonth: false,
-      isPreviousMonth: true,
     };
   });
 };
@@ -73,7 +71,6 @@ export const nextMonthDisplay = (
       ).format("YYYY-MM-DD"),
       dayNumber: idx + 1,
       isCurrentMonth: false,
-      isNextMonth: true,
     };
   });
 };

@@ -6,7 +6,11 @@ interface Props {
 }
 
 const HolidayDisplay = ({ holidayName, countryCode }: Props): JSX.Element => {
-  return <Wrapper $countryCode={countryCode}>{holidayName}</Wrapper>;
+  return (
+    <Wrapper $countryCode={countryCode} data-testid={"holiday-display"}>
+      {holidayName}
+    </Wrapper>
+  );
 };
 
 export default HolidayDisplay;

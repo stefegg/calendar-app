@@ -16,7 +16,6 @@ function App() {
   const [selectedMonth, setSelectedMonth] = useState<string>(CURRENT_MONTH);
   const [errorMsg, setErrorMsg] = useState<string | undefined>(undefined);
   const [holidays, setHolidays] = useState<Holiday[] | null>(null);
-
   useEffect(() => {
     const holidayCall = async (codeOne: string, codeTwo: string) => {
       const holidaySetOne = await getHolidays(codeOne);

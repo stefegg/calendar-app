@@ -57,7 +57,9 @@ const Calendar = ({
     <>
       <WeekDaysHeader>
         {DAYS_OF_WEEK.map((day, idx) => (
-          <HeaderCell key={`${day}-${idx}`}>{day}</HeaderCell>
+          <HeaderCell key={`${day}-${idx}`} data-testid="day-of-week-display">
+            {day}
+          </HeaderCell>
         ))}
       </WeekDaysHeader>
       {errorMsg && <ErrorDisplay>{errorMsg}</ErrorDisplay>}
@@ -67,6 +69,7 @@ const Calendar = ({
             <DayDisplay
               key={`${day.dateString}-${idx}`}
               $currentMonth={day.isCurrentMonth}
+              data-testid={"day-display"}
             >
               {day.dayNumber}
               {day.holiday?.length

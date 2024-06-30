@@ -16,8 +16,6 @@ export interface DateAttr {
   dateString: string;
   dayNumber: number;
   isCurrentMonth: boolean;
-  isNextMonth?: boolean;
-  isPreviousMonth?: boolean;
   holiday?: Holiday[];
 }
 

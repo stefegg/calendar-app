@@ -19,7 +19,11 @@ const CalendarHeader = ({ selectedMonth, setSelectedMonth }: Props) => {
         </span>
         Holiday Calendar
       </Title>
-      <Select value={selectedMonth} onChange={handleChange}>
+      <Select
+        value={selectedMonth}
+        onChange={handleChange}
+        data-testid="select"
+      >
         {MONTH_ARRAY.map((month, idx) => (
           <option value={month} key={`${month}-${idx}`}>
             {month}
