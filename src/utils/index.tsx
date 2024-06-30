@@ -21,6 +21,8 @@ export const currentMonthDisplay = (
   year: number,
   month: string
 ): DateAttr[] => {
+  // build current month array by mapping through array that is the length of the current month, build dayString and dayNumber by adding + 1 to index
+  // flag isCurrentMonth true to differentiate style and holiday display
   return [...Array(getMonthDayCount(year, month))].map((_, idx) => {
     return {
       dateString: dayjs(`${year}-${month}-${idx + 1}`).format("YYYY-MM-DD"),
@@ -37,24 +39,26 @@ export const prevMonthDisplay = (
     dateString: string | number | dayjs.Dayjs | Date | null | undefined;
   }[]
 ): DateAttr[] => {
-  const visibleNumberOfDaysFromPreviousMonth = getDayIndex(
-    currentMonthDays[0].dateString
-  );
+  // get index that represents the day of the week for first day of current month
+  // if first day is Monday, index is 1, and we know 1 day will show from prev month
+  const visibleNumberOfDays = getDayIndex(currentMonthDays[0].dateString);
   const previousMonth = dayjs(`${year}-${month}-01`).subtract(1, "month");
 
-  const previousMonthLastMondayDayOfMonth = dayjs(
-    currentMonthDays[0].dateString
-  )
-    .subtract(visibleNumberOfDaysFromPreviousMonth, "day")
+  //First displayed day of previous month, will always start on Sunday if any are visible
+  const lastSundayDayOfMonth = dayjs(currentMonthDays[0].dateString)
+    .subtract(visibleNumberOfDays, "day")
     .date();
-  return [...Array(visibleNumberOfDaysFromPreviousMonth)].map((_, idx) => {
+  // build prevMonth array by mapping through array that is length of number of visible days we require
+  // dateString is built by adding + 1 to previousMonth.month() because .month() months are zero indexed ie. January is 0 and December is 11
+  // day of datestring and dayNumber are calculated by adding index of visibleNumberOfDays to Sunday start point
+  return [...Array(visibleNumberOfDays)].map((_, idx) => {
     return {
       dateString: dayjs(
         `${previousMonth.year()}-${previousMonth.month() + 1}-${
-          previousMonthLastMondayDayOfMonth + idx
+          lastSundayDayOfMonth + idx
         }`
       ).format("YYYY-MM-DD"),
-      dayNumber: previousMonthLastMondayDayOfMonth + idx,
+      dayNumber: lastSundayDayOfMonth + idx,
       isCurrentMonth: false,
     };
   });
@@ -69,9 +73,11 @@ export const nextMonthDisplay = (
     `${year}-${month}-${currentMonthDays.length}`
   );
   const nextMonth = dayjs(`${year}-${month}-01`).add(1, "month");
-  const visibleNumberOfDaysFromNextMonth = 6 - lastDayOfTheMonthWeekday;
-
-  return [...Array(visibleNumberOfDaysFromNextMonth)].map((_, idx) => {
+  //subtract last day of the month from 6 to determine visible number of days for next month
+  const visibleNumberOfDays = 6 - lastDayOfTheMonthWeekday;
+  // build nextMonth array by iterating over array that is length of number of visible days
+  // build dateString and number of days by adding 1 to index
+  return [...Array(visibleNumberOfDays)].map((_, idx) => {
     return {
       dateString: dayjs(
         `${nextMonth.year()}-${nextMonth.month() + 1}-${idx + 1}`
@@ -88,11 +94,14 @@ export function updateHolidays(
 ): DateAttr[] {
   dateAttrs.map((dateAttr) => {
     if (dateAttr.isCurrentMonth) {
+      // if a dateString matches a holiday's date, add to matchingHoliday array
+      // cut out Optional holidays to avoid Texas only duplicates
       const matchingHolidays = holidays.filter(
         (holiday) =>
           holiday.date === dateAttr.dateString &&
           holiday.types[0] !== "Optional"
       );
+      // if there was an array created, assign it as value of holiday key on a given date
       if (matchingHolidays.length) {
         dateAttr.holiday = matchingHolidays;
       }

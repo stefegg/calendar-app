@@ -33,6 +33,7 @@ const Calendar = ({
 
   useEffect(() => {
     let currentMonthDays = currentMonthDisplay(2024, selectedMonth);
+    // if there are holidays, add them to the currentMonth only
     if (holidays !== null) {
       currentMonthDays = updateHolidays(currentMonthDays, holidays);
     }
