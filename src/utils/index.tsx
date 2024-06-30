@@ -10,6 +10,13 @@ export const getMonthDayCount = (year: number, month: string): number => {
   return dayjs(`${year}-${month}-01`).daysInMonth();
 };
 
+// find what day of the week a date is on 0 is Sunday
+export const getDayIndex = (
+  dateString: string | number | dayjs.Dayjs | Date | null | undefined
+): number => {
+  return dayjs(dateString).weekday();
+};
+
 export const currentMonthDisplay = (
   year: number,
   month: string
@@ -75,13 +82,6 @@ export const nextMonthDisplay = (
   });
 };
 
-// find what day of the week a date is on 0 is Sunday
-export const getDayIndex = (
-  dateString: string | number | dayjs.Dayjs | Date | null | undefined
-): number => {
-  return dayjs(dateString).weekday();
-};
-
 export function updateHolidays(
   dateAttrs: DateAttr[],
   holidays: Holiday[]
@@ -89,7 +89,9 @@ export function updateHolidays(
   dateAttrs.map((dateAttr) => {
     if (dateAttr.isCurrentMonth) {
       const matchingHolidays = holidays.filter(
-        (holiday) => holiday.date === dateAttr.dateString
+        (holiday) =>
+          holiday.date === dateAttr.dateString &&
+          holiday.types[0] !== "Optional"
       );
       if (matchingHolidays.length) {
         dateAttr.holiday = matchingHolidays;
